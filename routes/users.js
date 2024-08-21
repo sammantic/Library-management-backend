@@ -4,7 +4,7 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 
-const { User, validateUpdatetUser} = require("../models/User");
+const { User, validateUpdateUser} = require("../models/User");
 const { verifyToken } = require("../middlewares/verifyToken")
 
 
@@ -14,13 +14,13 @@ const { verifyToken } = require("../middlewares/verifyToken")
  * @method put
  * @access private
  */
-router.put("/:id", verifyToken,   asyncHandler( async (req, res) => {
+router.put("/:id", verifyToken, asyncHandler( async (req, res) => {
     
-    if (req.user.id != req.params.id ){
+    if (req.user.id !== req.params.id ){
         res.status(403).json({ message: "Your are not allowed, you can only update your profile"});
     }
     
-    const { error } = validateUpdatetUser(req.obj);
+    const { error } = validateUpdateUser(req.body);
     
     if (error) {
         res.status(400).json({ message: error.details[0].message });
