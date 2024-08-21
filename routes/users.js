@@ -25,6 +25,21 @@ router.get("/", verifyTokenAndAuthorizationAdmin, asyncHandler( async (req, res)
 }));
 
 /**
+ * @desc Get user by id
+ * @route /api/user/:id
+ * @method GET
+ * @access private (Only admin or the user)
+ */
+router.get("/:id", verifyTokenAndAuthorization, asyncHandler( async (req, res) => {
+    const user = await User.findById(req.params.id).select("-password");
+    if (user) {
+        return res.status(200).json(user);
+    } else {
+        return res.status(404).json({ message: "user not found" });
+    }
+}));
+
+/**
  * @desc Update user
  * @route /api/user:id
  * @method put
