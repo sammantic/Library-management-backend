@@ -16,8 +16,8 @@ const { verifyToken } = require("../middlewares/verifyToken")
  */
 router.put("/:id", verifyToken,   asyncHandler( async (req, res) => {
     
-    if (req.user.id != req.param.id ){
-        res.statu(403).json({ message: "Your are not allowed, you can only update your profile"});
+    if (req.user.id != req.params.id ){
+        res.status(403).json({ message: "Your are not allowed, you can only update your profile"});
     }
     
     const { error } = validateUpdatetUser(req.obj);
