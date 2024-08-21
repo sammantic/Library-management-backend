@@ -18,12 +18,14 @@ router.put("/:id", verifyToken, asyncHandler( async (req, res) => {
     
     if (req.user.id !== req.params.id ){
         res.status(403).json({ message: "Your are not allowed, you can only update your profile"});
+        return;
     }
     
     const { error } = validateUpdateUser(req.body);
     
     if (error) {
         res.status(400).json({ message: error.details[0].message });
+        return;
     }
 
     if (req.body.password) {
