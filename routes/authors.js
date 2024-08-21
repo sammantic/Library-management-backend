@@ -30,10 +30,10 @@ const authors = [
 router.get("/", async (req, res) => {
     try {
         const authorList = await Author.find();
-        res.status(200).json(authorList);
+        return res.status(200).json(authorList);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        return res.status(500).json({ message: "Something went wrong" });
     }
 });
 
@@ -48,13 +48,13 @@ router.get("/:id", async (req, res) => {
         const author = await Author.findById(req.params.id);
 
         if (author) {
-            res.status(200).json(author)
+            return res.status(200).json(author)
         } else {
-            res.status(404).json({ message: "Author not found" });
+            return res.status(404).json({ message: "Author not found" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        return res.status(500).json({ message: "Something went wrong" });
     }
 });
 
@@ -82,10 +82,10 @@ router.post('/', async (req, res) => {
 
         const result =  await author.save();
 
-        res.status(201).json(result);
+        return res.status(201).json(result);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });   
+        return res.status(500).json({ message: "Something went wrong" });   
     }
 
 });
@@ -101,7 +101,7 @@ router.put('/:id', async (req, res) => {
     const { error } = validateUpdateAuthor(req.body);
 
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     
     try {
@@ -115,10 +115,10 @@ router.put('/:id', async (req, res) => {
             }
         });
     
-        res.status(200).json({author});
+        return res.status(200).json({author});
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });  
+        return res.status(500).json({ message: "Something went wrong" });  
     }
 });
 
@@ -134,13 +134,13 @@ router.delete('/:id', async (req, res) => {
         const author = await Author.findById(req.params.id);
         if (author) {
             await Author.findByIdAndDelete(req.params.id);
-            res.status(200).json({ message: "Author has been deleted" });
+            return res.status(200).json({ message: "Author has been deleted" });
         } else {
-            res.status(404).json({ message: "Author not found" });
+            return res.status(404).json({ message: "Author not found" });
         }
     } catch ( error ) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        return res.status(500).json({ message: "Something went wrong" });
     }
 });
 

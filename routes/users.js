@@ -17,15 +17,14 @@ const { verifyToken } = require("../middlewares/verifyToken")
 router.put("/:id", verifyToken, asyncHandler( async (req, res) => {
     
     if (req.user.id !== req.params.id ){
-        res.status(403).json({ message: "Your are not allowed, you can only update your profile"});
-        return;
+        return res.status(403).json({ message: "Your are not allowed, you can only update your profile"});
+        
     }
     
     const { error } = validateUpdateUser(req.body);
     
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
-        return;
+        return res.status(400).json({ message: error.details[0].message });
     }
 
     if (req.body.password) {
@@ -41,7 +40,7 @@ router.put("/:id", verifyToken, asyncHandler( async (req, res) => {
         }
     }, {new: true}).select("-password");
     console.log(req.body)
-    res.status(200).json(updateUser);
+    return res.status(200).json(updateUser);
 }));
 
 module.exports = router

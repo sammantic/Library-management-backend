@@ -24,7 +24,7 @@ router.post("/register", asyncHandler( async (req, res) => {
     let user = await User.findOne({email: req.body.email});
 
     if (user) {
-        res.status(400).json({ message: "This user already registered" });
+        return res.status(400).json({ message: "This user already registered" });
     } else {
 
         const salt = await bcrypt.genSalt(0);
@@ -44,7 +44,7 @@ router.post("/register", asyncHandler( async (req, res) => {
 
         const { password, ...other } = result._doc;
 
-        res.status(201).json({...other, token});
+        return res.status(201).json({...other, token});
     }
 }));
 
@@ -79,7 +79,7 @@ router.post("/login", asyncHandler( async (req, res) => {
 
     const { password, ...other } = user._doc
 
-    res.status(200).json({...other, token});
+    return res.status(200).json({...other, token});
 }));
 
 module.exports = router;

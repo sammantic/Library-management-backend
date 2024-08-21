@@ -45,9 +45,9 @@ router.get("/:id", asyncHandler( async (req, res) => {
     const book = await Book.findById(req.params.id).populate("author");
 
     if (book) {
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } else {
-        res.status(404).json({message: "Book not found"});
+        return res.status(404).json({message: "Book not found"});
     }
 }));
 
@@ -76,7 +76,7 @@ router.post("/", asyncHandler( async (req, res) => {
     )
 
     const result = await book.save();
-    res.status(201).json(result);
+    return res.status(201).json(result);
 }));
 
 /**
@@ -102,7 +102,7 @@ router.put("/:id", asyncHandler( async (req, res) => {
                 cover: req.body.cover
             }
     });
-    res.status(200).json(updatedBook);
+    return res.status(200).json(updatedBook);
 }));
 
 /**
@@ -115,9 +115,9 @@ router.delete("/:id", asyncHandler( async (req, res) => {
     const book = await Book.findById(req.params.id);
     if (book) {
         await Book.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "Book has been deleted"})
+        return res.status(200).json({ message: "Book has been deleted"})
     } else {
-        res.status(400).json({ message: "book not found" });
+        return res.status(400).json({ message: "book not found" });
     }
 }));
 
